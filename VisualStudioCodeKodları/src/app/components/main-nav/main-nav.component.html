@@ -1,0 +1,38 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
+    <mat-toolbar class="mat-elevation-z8" style="background-color:#0000;color:white;"><a>Menu</a></mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item [routerLink]="['/']">Ana Sayfa</a>
+      <a mat-list-item *ngfor="let kat of katergoriler">{{kat.kategoriAdi}}</a>
+      <a mat-list-item [routerLink]="['/haber']">Haberler</a>
+      <a mat-list-item [routerLink]="['/kategori']">Kategoriler</a>
+
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" class="mat-elevation-z8">
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>Haber Portalı</span>
+      <span class="spacer"></span>
+      <button mat-button [matMenuTriggerFor]="menu">
+        <mat-icon>settings</mat-icon>
+      </button>
+      <button mat-button [routerLink]="['/login']" *ngIf="!ApiServis.oturumKontrol()">Oturum Aç</button>
+      
+
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item [routerLink]="['/']">Anasayfa</button>
+        <button mat-menu-item [routerLink]="['/kategori']">Kategoriler</button>
+        <button mat-menu-item [routerLink]="['/haber']">Haberler</button>
+        <button mat-menu-item>Üyeler</button>
+        <button mat-menu-item>Yorumlar</button>
+      </mat-menu>
+    </mat-toolbar>
+    <!-- Add Content Here-->
+      <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,30 @@
+<mat-toolbar color="primary" class="mat-elevation-z8">
+  <span>{{dialogBaslik}}</span>
+</mat-toolbar>
+<div class="container" *ngIf="islem!='detay'">
+  <form [formGroup]="frm">
+<mat-form-field appearance="outline">
+  <mat-label>Kategori Adı </mat-label>
+  <mat-select placeholder="Kategori Seçiniz" formControlName="KategoriId" required>
+    <mat-option [value]="kat.kategoriId" *ngFor="let kat of kategoriler">{{kat.kategoriAdi}}</mat-option>
+  </mat-select>
+  
+</mat-form-field>
+<mat-form-field appearance="outline">
+  <mat-label>Başlık</mat-label>
+  <input matInput placeholder="Başlık" formControlName="haberBaslik" required>
+</mat-form-field>
+<jodit-editor [config]="Jconfig"  formControlName="İcerik"></jodit-editor>
+  </form>
+  <button mat-raised-button color="primary" (click)="dialogRef.close(frm.value)"
+ [disabled]="frm.invalid">Kaydet</button>&nbsp;
+ <button mat-raised-button color="warn" (click)="dialogRef.close()">İptal</button>&nbsp;
+</div>
+
+ <div class="container" *ngIf="islem=='detay'">
+   <h2>{{yeniKayit.haberBaslik}}</h2>
+   <div [innerHTML]="yeniKayit.haberDetay | safeHtml"></div>
+   <p>Bu Haber {{yeniKayit.haberOkuma}} Kez Okundu</p>
+   <button mat-raised-button color="warn" (click)="dialogRef.close()">Kapat</button>&nbsp;
+ </div>>
+
